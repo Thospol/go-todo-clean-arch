@@ -23,29 +23,29 @@ func (t *todoUseCase) GetAllTodo() (todos []models.Todo, err error) {
 	return todo, handleErr
 }
 
-func (t *todoUseCase) CreateATodo(input *models.Todo) (err error) {
-	handleErr := t.todoRepo.CreateATodo(input)
+func (t *todoUseCase) CreateTodo(input *models.Todo) (err error) {
+	handleErr := t.todoRepo.CreateTodo(input)
 	return handleErr
 }
 
-func (t *todoUseCase) GetATodo(input *models.Todo, id string) (err error) {
-	handleErr := t.todoRepo.GetATodo(input, id)
+func (t *todoUseCase) GetTodo(input *models.Todo, id string) (err error) {
+	handleErr := t.todoRepo.GetTodo(input, id)
 	return handleErr
 }
 
-func (t *todoUseCase) UpdateATodo(input *models.Todo, id string) (err error) {
+func (t *todoUseCase) UpdateTodo(input *models.Todo, id string) (err error) {
 	// check avaliable
 	var checkingTodo models.Todo
-	errResp := t.todoRepo.GetATodo(&checkingTodo, id)
+	errResp := t.todoRepo.GetTodo(&checkingTodo, id)
 	if errResp != nil {
 		return errResp
 	}
 	// update
-	handleErr := t.todoRepo.UpdateATodo(input, id)
+	handleErr := t.todoRepo.UpdateTodo(input, id)
 	return handleErr
 }
 
-func (t *todoUseCase) DeleteATodo(input *models.Todo, id string) (err error) {
-	handleErr := t.todoRepo.DeleteATodo(input, id)
+func (t *todoUseCase) DeleteTodo(input *models.Todo, id string) (err error) {
+	handleErr := t.todoRepo.DeleteTodo(input, id)
 	return handleErr
 }

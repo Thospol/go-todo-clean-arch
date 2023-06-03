@@ -5,7 +5,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"github.com/krittawatcode/go-todo-clean-arch/databases"
+	"github.com/krittawatcode/go-todo-clean-arch/database"
 	"github.com/krittawatcode/go-todo-clean-arch/deliveries/routes"
 	"github.com/krittawatcode/go-todo-clean-arch/models"
 )
@@ -13,15 +13,18 @@ import (
 var err error
 
 func main() {
-	databases.DB, err = gorm.Open("mysql", databases.DbURL(databases.BuildDBConfig()))
+	database.DB, err = gorm.Open("mysql", database.DbURL(database.BuildDBConfig()))
 	if err != nil {
 		fmt.Println("statuse: ", err)
 	}
-	defer databases.DB.Close()
+	defer database.DB.Close()
 	// run the migrations: todo struct
-	databases.DB.AutoMigrate(&models.Todo{})
+	database.DB.AutoMigrate(&models.Todo{})
 	//setup routes
 	r := routes.SetupRouter()
 	// running
-	r.Run(":8080")
+	err = r.Run(":8080")
+	if err != nil {
+		panic(err)
+	}
 }

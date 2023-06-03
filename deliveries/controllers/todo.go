@@ -1,4 +1,4 @@
-package deliveries
+package controllers
 
 import (
 	"net/http"
@@ -8,20 +8,20 @@ import (
 	"github.com/krittawatcode/go-todo-clean-arch/models"
 )
 
-// ToDoHandler use for handle framwork here and present as a controller
-type ToDoHandler struct {
+// ToDoController use for handle framework here and present as a controller
+type ToDoController struct {
 	todoUseCase domains.ToDoUseCase
 }
 
-// NewToDoHandler ...
-func NewToDoHandler(usecase domains.ToDoUseCase) *ToDoHandler {
-	return &ToDoHandler{
+// NewToDoController ...
+func NewToDoController(usecase domains.ToDoUseCase) *ToDoController {
+	return &ToDoController{
 		todoUseCase: usecase,
 	}
 }
 
 // GetAllTodo ...
-func (t *ToDoHandler) GetAllTodo(c *gin.Context) {
+func (t *ToDoController) GetAllTodo(c *gin.Context) {
 	resp, err := t.todoUseCase.GetAllTodo()
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
@@ -30,13 +30,13 @@ func (t *ToDoHandler) GetAllTodo(c *gin.Context) {
 	}
 }
 
-// CreateATodo ...
-func (t *ToDoHandler) CreateATodo(c *gin.Context) {
+// CreateTodo ...
+func (t *ToDoController) CreateTodo(c *gin.Context) {
 	var newToDo models.Todo
 	if err := c.ShouldBind(&newToDo); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 	}
-	err := t.todoUseCase.CreateATodo(&newToDo)
+	err := t.todoUseCase.CreateTodo(&newToDo)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -44,11 +44,11 @@ func (t *ToDoHandler) CreateATodo(c *gin.Context) {
 	}
 }
 
-// GetATodo ...
-func (t *ToDoHandler) GetATodo(c *gin.Context) {
+// GetTodo ...
+func (t *ToDoController) GetTodo(c *gin.Context) {
 	var newToDo models.Todo
 	id := c.Params.ByName("id")
-	err := t.todoUseCase.GetATodo(&newToDo, id)
+	err := t.todoUseCase.GetTodo(&newToDo, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -56,14 +56,14 @@ func (t *ToDoHandler) GetATodo(c *gin.Context) {
 	}
 }
 
-// UpdateATodo ...
-func (t *ToDoHandler) UpdateATodo(c *gin.Context) {
+// UpdateTodo ...
+func (t *ToDoController) UpdateTodo(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var reqToDo models.Todo
 	if err := c.ShouldBind(&reqToDo); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 	}
-	err := t.todoUseCase.UpdateATodo(&reqToDo, id)
+	err := t.todoUseCase.UpdateTodo(&reqToDo, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {
@@ -71,11 +71,11 @@ func (t *ToDoHandler) UpdateATodo(c *gin.Context) {
 	}
 }
 
-// DeleteATodo ...
-func (t *ToDoHandler) DeleteATodo(c *gin.Context) {
+// DeleteTodo ...
+func (t *ToDoController) DeleteTodo(c *gin.Context) {
 	id := c.Params.ByName("id")
 	var respToDo models.Todo
-	err := t.todoUseCase.DeleteATodo(&respToDo, id)
+	err := t.todoUseCase.DeleteTodo(&respToDo, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)
 	} else {

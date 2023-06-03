@@ -1,0 +1,17 @@
+Project SlideCar {
+  database_type: 'MySQL'
+  Note: '''
+    # Todo Database
+    **markdown content here**
+  '''
+}
+
+Table todo {
+  id bigint [pk, increment, not null, note: 'ไอดี']
+  created_at timestamptz [not null, note: 'วันเวลาที่สร้าง']
+  updated_at timestamptz [not null, note: 'วันเวลาที่อัพเดตล่าสุด']
+  deleted_at timestamptz [default: null, note: 'วันเวลาที่ลบ']
+  title varchar [not null, note: 'หัวข้อ']
+  description varchar [not null, note: 'รายละเอียด']
+  note: 'todo table'
+}

@@ -15,11 +15,9 @@ import (
 
 type Suite struct {
 	suite.Suite
-	DB   *gorm.DB
-	mock sqlmock.Sqlmock
-
+	DB         *gorm.DB
+	mock       sqlmock.Sqlmock
 	repository domains.ToDoRepository
-	todo       *models.Todo
 }
 
 func (s *Suite) SetupSuite() {
