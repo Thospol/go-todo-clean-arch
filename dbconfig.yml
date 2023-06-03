@@ -1,11 +1,11 @@
 development:
     dialect: mysql
-    datasource: hris:P@ssw0rd@tcp(35.240.188.29:3306)/hris?charset=utf8mb4&parseTime=True
+    datasource: root:${DB_PASSWORD}@tcp(0.0.0.0:3306)/root?charset=utf8mb4&parseTime=True
     dir: db/migrations
     table: migrations
 
 production:
     dialect: mysql
-    datasource: hris:d{_f=Sk15$]k7Tid@tcp(34.143.161.168:3306)/hris?charset=utf8mb4&parseTime=True
+    datasource: ${DB_USER}:${DB_PASSWORD}@tcp(${DB_HOST}:3306)/${DB_NAME}?charset=utf8mb4&parseTime=True
     dir: db/migrations
     table: migrations
