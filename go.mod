@@ -1,4 +1,4 @@
-module github.com/krittawatcode/go-todo-clean-arch
+module github.com/Thospol/go-todo-clean-arch
 
 go 1.15
 

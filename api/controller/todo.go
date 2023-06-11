@@ -1,26 +1,25 @@
-package controllers
+package controller
 
 import (
 	"net/http"
 
+	"github.com/Thospol/go-todo-clean-arch/domain"
 	"github.com/gin-gonic/gin"
-	"github.com/krittawatcode/go-todo-clean-arch/domains"
-	"github.com/krittawatcode/go-todo-clean-arch/models"
 )
 
 // ToDoController use for handle framework here and present as a controller
 type ToDoController struct {
-	todoUseCase domains.ToDoUseCase
+	todoUseCase domain.ToDoUseCase
 }
 
-// NewToDoController ...
-func NewToDoController(usecase domains.ToDoUseCase) *ToDoController {
+// NewToDoController new instance of todo controller
+func NewToDoController(usecase domain.ToDoUseCase) *ToDoController {
 	return &ToDoController{
 		todoUseCase: usecase,
 	}
 }
 
-// GetAllTodo ...
+// GetAllTodo get all todo
 func (t *ToDoController) GetAllTodo(c *gin.Context) {
 	resp, err := t.todoUseCase.GetAllTodo()
 	if err != nil {
@@ -32,7 +31,7 @@ func (t *ToDoController) GetAllTodo(c *gin.Context) {
 
 // CreateTodo ...
 func (t *ToDoController) CreateTodo(c *gin.Context) {
-	var newToDo models.Todo
+	var newToDo domain.Todo
 	if err := c.ShouldBind(&newToDo); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 	}
@@ -44,9 +43,9 @@ func (t *ToDoController) CreateTodo(c *gin.Context) {
 	}
 }
 
-// GetTodo ...
+// GetTodo get todo
 func (t *ToDoController) GetTodo(c *gin.Context) {
-	var newToDo models.Todo
+	var newToDo domain.Todo
 	id := c.Params.ByName("id")
 	err := t.todoUseCase.GetTodo(&newToDo, id)
 	if err != nil {
@@ -56,10 +55,10 @@ func (t *ToDoController) GetTodo(c *gin.Context) {
 	}
 }
 
-// UpdateTodo ...
+// UpdateTodo update todo
 func (t *ToDoController) UpdateTodo(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var reqToDo models.Todo
+	var reqToDo domain.Todo
 	if err := c.ShouldBind(&reqToDo); err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
 	}
@@ -71,10 +70,10 @@ func (t *ToDoController) UpdateTodo(c *gin.Context) {
 	}
 }
 
-// DeleteTodo ...
+// DeleteTodo delete todo
 func (t *ToDoController) DeleteTodo(c *gin.Context) {
 	id := c.Params.ByName("id")
-	var respToDo models.Todo
+	var respToDo domain.Todo
 	err := t.todoUseCase.DeleteTodo(&respToDo, id)
 	if err != nil {
 		c.AbortWithStatus(http.StatusNotFound)

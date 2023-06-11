@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/jinzhu/gorm"
 )
@@ -24,9 +23,9 @@ func BuildDBConfig() *DBConfig {
 	dbConfig := DBConfig{
 		Host:     "0.0.0.0",
 		Port:     3306,
-		User:     "root",
+		User:     "todo",
 		DBName:   "todo",
-		Password: os.Getenv("DB_PASSWORD"),
+		Password: "U'gbL1pITxy]Bx5&",
 	}
 	return &dbConfig
 }

@@ -1,0 +1,10 @@
+.vscode
+/.idea/
+*.csv
+/*.html
+/*.xml
+/docs
+.goreload
+dbml-error.log
+sql_client.json
+sql_proxy.sh

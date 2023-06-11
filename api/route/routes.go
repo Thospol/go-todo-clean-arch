@@ -1,17 +1,17 @@
-package routes
+package route
 
 import (
+	controllers "github.com/Thospol/go-todo-clean-arch/api/controller"
+	"github.com/Thospol/go-todo-clean-arch/database"
+	"github.com/Thospol/go-todo-clean-arch/repository"
+	"github.com/Thospol/go-todo-clean-arch/usecase"
 	"github.com/gin-gonic/gin"
-	"github.com/krittawatcode/go-todo-clean-arch/database"
-	"github.com/krittawatcode/go-todo-clean-arch/deliveries/controllers"
-	"github.com/krittawatcode/go-todo-clean-arch/repositories"
-	"github.com/krittawatcode/go-todo-clean-arch/usecases"
 )
 
 // SetupRouter ...
 func SetupRouter() *gin.Engine {
-	todoRepo := repositories.NewToDoRepository(database.DB)
-	todoUseCase := usecases.NewToDoUseCase(todoRepo)
+	todoRepo := repository.NewToDoRepository(database.DB)
+	todoUseCase := usecase.NewToDoUseCase(todoRepo)
 	todoController := controllers.NewToDoController(todoUseCase)
 
 	r := gin.Default()

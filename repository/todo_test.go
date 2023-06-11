@@ -1,13 +1,12 @@
-package repositories
+package repository
 
 import (
 	"database/sql"
 	"regexp"
 	"testing"
 
+	"github.com/Thospol/go-todo-clean-arch/domain"
 	"github.com/jinzhu/gorm"
-	"github.com/krittawatcode/go-todo-clean-arch/domains"
-	"github.com/krittawatcode/go-todo-clean-arch/models"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"gopkg.in/DATA-DOG/go-sqlmock.v1"
@@ -17,7 +16,7 @@ type Suite struct {
 	suite.Suite
 	DB         *gorm.DB
 	mock       sqlmock.Sqlmock
-	repository domains.ToDoRepository
+	repository domain.ToDoRepository
 }
 
 func (s *Suite) SetupSuite() {
@@ -50,7 +49,7 @@ func (s *Suite) TestGetAllTodo() {
 	rows := sqlmock.NewRows([]string{"id", "title", "description"}).AddRow(1, "Make some program", "Create TODO app for testing").AddRow(2, "Make some program", "Create TODO app for testing")
 	// expected
 	s.mock.ExpectQuery(regexp.QuoteMeta("SELECT * FROM `todo`")).WillReturnRows(rows)
-	result := []models.Todo{}
+	result := []domain.Todo{}
 	// perform
 	err := s.repository.GetAllTodo(&result)
 	require.NoError(s.T(), err)

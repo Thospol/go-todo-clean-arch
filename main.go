@@ -1,13 +1,11 @@
 package main
 
 import (
-	"fmt"
-
+	"github.com/Thospol/go-todo-clean-arch/api/route"
+	"github.com/Thospol/go-todo-clean-arch/database"
+	"github.com/Thospol/go-todo-clean-arch/domain"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
-	"github.com/krittawatcode/go-todo-clean-arch/database"
-	"github.com/krittawatcode/go-todo-clean-arch/deliveries/routes"
-	"github.com/krittawatcode/go-todo-clean-arch/models"
 )
 
 var err error
@@ -15,15 +13,18 @@ var err error
 func main() {
 	database.DB, err = gorm.Open("mysql", database.DbURL(database.BuildDBConfig()))
 	if err != nil {
-		fmt.Println("statuse: ", err)
+		panic(err)
 	}
 	defer database.DB.Close()
+
 	// run the migrations: todo struct
-	database.DB.AutoMigrate(&models.Todo{})
+	database.DB.AutoMigrate(&domain.Todo{})
+
 	//setup routes
-	r := routes.SetupRouter()
+	r := route.SetupRouter()
+
 	// running
-	err = r.Run(":8080")
+	err = r.Run(":8000")
 	if err != nil {
 		panic(err)
 	}
