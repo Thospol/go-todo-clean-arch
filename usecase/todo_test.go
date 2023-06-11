@@ -18,7 +18,9 @@ func (s *Suite) SetupSuite() {
 	s.TodoRepository = mocks.NewToDoRepository(s.T())
 }
 
-func (s *Suite) AfterTest(_, _ string) {}
+func (s *Suite) AfterTest(_, _ string) {
+	s.TodoRepository.AssertExpectations(s.T())
+}
 
 func TestInit(t *testing.T) {
 	suite.Run(t, new(Suite))
